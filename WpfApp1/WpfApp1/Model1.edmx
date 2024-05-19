@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище demoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imya" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familiya" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Oborudovanie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipNeispravnosti" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="OpisanieProblemi" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImyaRoli" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VOzhidanii" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VRabote" Type="nvarchar" MaxLength="50" />
+          <Property Name="Vipolneno" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="StatusID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="OborudovanieID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="KlientID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Klient_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Klient" Type="Self.Klient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Klient">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="KlientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Oborudovanie">
+          <End Role="Oborudovanie" Type="Self.Oborudovanie" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Oborudovanie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="OborudovanieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище demoModelContainer">
+          <EntitySet Name="Klient" EntityType="Self.Klient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Oborudovanie" EntityType="Self.Oborudovanie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Klient_Role" Association="Self.FK_Klient_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Klient" EntitySet="Klient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Klient" Association="Self.FK_Zayavka_Klient">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Oborudovanie" Association="Self.FK_Zayavka_Oborudovanie">
+            <End Role="Oborudovanie" EntitySet="Oborudovanie" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Status" Association="Self.FK_Zayavka_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="demoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familiya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Klient_Role" FromRole="Klient" ToRole="Role" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_Klient" FromRole="Klient" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Oborudovanie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipNeispravnosti" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OpisanieProblemi" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_Oborudovanie" FromRole="Oborudovanie" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImyaRoli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Klient" Relationship="Self.FK_Klient_Role" FromRole="Role" ToRole="Klient" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VOzhidanii" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VRabote" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Vipolneno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_Status" FromRole="Status" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StatusID" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="OborudovanieID" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="KlientID" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Klient" Relationship="Self.FK_Zayavka_Klient" FromRole="Zayavka" ToRole="Klient" />
+          <NavigationProperty Name="Oborudovanie" Relationship="Self.FK_Zayavka_Oborudovanie" FromRole="Zayavka" ToRole="Oborudovanie" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Zayavka_Status" FromRole="Zayavka" ToRole="Status" />
+        </EntityType>
+        <Association Name="FK_Klient_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Klient" Type="Self.Klient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Klient">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="KlientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Oborudovanie">
+          <End Role="Oborudovanie" Type="Self.Oborudovanie" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Oborudovanie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="OborudovanieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="demoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Klient" EntityType="Self.Klient" />
+          <EntitySet Name="Oborudovanie" EntityType="Self.Oborudovanie" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" />
+          <AssociationSet Name="FK_Klient_Role" Association="Self.FK_Klient_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Klient" EntitySet="Klient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Klient" Association="Self.FK_Zayavka_Klient">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Oborudovanie" Association="Self.FK_Zayavka_Oborudovanie">
+            <End Role="Oborudovanie" EntitySet="Oborudovanie" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Status" Association="Self.FK_Zayavka_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище demoModelContainer" CdmEntityContainer="demoEntities">
+          <EntitySetMapping Name="Klient">
+            <EntityTypeMapping TypeName="demoModel.Klient">
+              <MappingFragment StoreEntitySet="Klient">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Imya" ColumnName="Imya" />
+                <ScalarProperty Name="Familiya" ColumnName="Familiya" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Parol" ColumnName="Parol" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Oborudovanie">
+            <EntityTypeMapping TypeName="demoModel.Oborudovanie">
+              <MappingFragment StoreEntitySet="Oborudovanie">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TipNeispravnosti" ColumnName="TipNeispravnosti" />
+                <ScalarProperty Name="OpisanieProblemi" ColumnName="OpisanieProblemi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="demoModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ImyaRoli" ColumnName="ImyaRoli" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="demoModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VOzhidanii" ColumnName="VOzhidanii" />
+                <ScalarProperty Name="VRabote" ColumnName="VRabote" />
+                <ScalarProperty Name="Vipolneno" ColumnName="Vipolneno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zayavka">
+            <EntityTypeMapping TypeName="demoModel.Zayavka">
+              <MappingFragment StoreEntitySet="Zayavka">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="OborudovanieID" ColumnName="OborudovanieID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

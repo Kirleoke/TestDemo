@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище demoModelContainer" CdmEntityContainer="demoEntities">
+    <EntitySetMapping Name="Klient">
+      <EntityTypeMapping TypeName="demoModel.Klient">
+        <MappingFragment StoreEntitySet="Klient">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Imya" ColumnName="Imya" />
+          <ScalarProperty Name="Familiya" ColumnName="Familiya" />
+          <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Parol" ColumnName="Parol" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Oborudovanie">
+      <EntityTypeMapping TypeName="demoModel.Oborudovanie">
+        <MappingFragment StoreEntitySet="Oborudovanie">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TipNeispravnosti" ColumnName="TipNeispravnosti" />
+          <ScalarProperty Name="OpisanieProblemi" ColumnName="OpisanieProblemi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="demoModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ImyaRoli" ColumnName="ImyaRoli" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="demoModel.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VOzhidanii" ColumnName="VOzhidanii" />
+          <ScalarProperty Name="VRabote" ColumnName="VRabote" />
+          <ScalarProperty Name="Vipolneno" ColumnName="Vipolneno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zayavka">
+      <EntityTypeMapping TypeName="demoModel.Zayavka">
+        <MappingFragment StoreEntitySet="Zayavka">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="OborudovanieID" ColumnName="OborudovanieID" />
+          <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
